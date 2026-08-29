@@ -71,6 +71,7 @@ interface OrderRowActionsProps {
   setDeleteOpen?: (open: boolean) => void;
   onComplete?: (order: Order) => void;
   onCancelOrder?: (order: Order) => void;
+  onRestoreOrder?: (order: Order) => void;
   onMarkDamage?: (order: Order) => void;
   onMarkExchange?: (order: Order) => void;
   onPartialUpdate?: (order: Order) => void;
@@ -86,6 +87,7 @@ export function OrderRowActions({
   onPartialUpdate,
   onView,
   onCancelOrder,
+  onRestoreOrder,
   onViewInvoice,
   onAssignCourier,
   setDeleteOpen,
@@ -130,6 +132,8 @@ export function OrderRowActions({
 
   const [editOpen, setEditOpen] = useState(false);
   const [editOpenTiming, setEditOpenTiming] = useState(false);
+  const [restoreCanceledConfirmOpen, setRestoreCanceledConfirmOpen] =
+    useState(false);
 
   const withoutTELESALES = userRole && ["ADMIN", "MANAGER"].includes(userRole);
 
@@ -331,7 +335,7 @@ export function OrderRowActions({
               </>
             )}
 
-          {hasAccess && !isCompleted && onCancelOrder && (
+          {/* {hasAccess && !isCompleted && onCancelOrder && (
             <DropdownMenuItem
               onClick={() => setCancelModalOpen(true)}
               className="gap-2 text-sm cursor-pointer text-rose-600 focus:text-rose-600 dark:text-rose-400"
@@ -339,6 +343,29 @@ export function OrderRowActions({
               <X className="h-3.5 w-3.5" />
               Cancel Order
             </DropdownMenuItem>
+          )} */}
+
+          {hasAccess && !isCompleted && !isCanceled && onCancelOrder && (
+            <DropdownMenuItem
+              onClick={() => setCancelModalOpen(true)}
+              className="gap-2 text-sm cursor-pointer text-rose-600 focus:text-rose-600 dark:text-rose-400"
+            >
+              <X className="h-3.5 w-3.5" />
+              Cancel Order
+            </DropdownMenuItem>
+          )}
+
+          {hasAccess && isCanceled && onRestoreOrder && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => setRestoreCanceledConfirmOpen(true)}
+                className="gap-2 text-sm cursor-pointer text-emerald-600 focus:text-emerald-600 dark:text-emerald-400"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+                Restore Order
+              </DropdownMenuItem>
+            </>
           )}
 
           {/* Partial Update - Only for ADMIN and when order is CONFIRMED */}
@@ -702,6 +729,96 @@ export function OrderRowActions({
         </DialogContent>
       </Dialog>
 
+      <Dialog
+        open={restoreCanceledConfirmOpen}
+        onOpenChange={setRestoreCanceledConfirmOpen}
+      >
+        <DialogContent className="sm:max-w-md gap-0 p-0 overflow-hidden rounded-2xl border-gray-200/80 dark:border-gray-700/60">
+          <div className="h-1 w-full bg-linear-to-r from-emerald-500 via-green-500 to-teal-500" />
+
+          <div className="flex items-center gap-3 border-b border-gray-100 px-6 py-5 dark:border-gray-800">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-900/20">
+              <RotateCcw className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+
+            <div>
+              <DialogTitle className="text-lg font-bold text-gray-900 dark:text-gray-50">
+                Restore Cancelled Order
+              </DialogTitle>
+
+              <DialogDescription className="text-sm text-gray-500 dark:text-gray-400">
+                Bring this cancelled order back to active status
+              </DialogDescription>
+            </div>
+          </div>
+
+          <div className="px-6 py-5 space-y-4">
+            <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 p-4 dark:border-emerald-800/40 dark:bg-emerald-900/10">
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Order ID</span>
+                  <span className="font-semibold text-gray-900 dark:text-gray-50">
+                    {order.customOrderId}
+                  </span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Customer</span>
+                  <span className="font-medium">
+                    {order.billingDetails?.fullName}
+                  </span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Current Status</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-semibold text-rose-700 dark:bg-rose-900/20 dark:text-rose-400">
+                    CANCELLED
+                  </span>
+                </div>
+
+                <div className="flex justify-between pt-2 border-t border-emerald-100 dark:border-emerald-800/40">
+                  <span className="text-gray-500">New Status</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
+                    CONFIRMED
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-800/40 dark:bg-blue-900/10">
+              <p className="text-xs leading-relaxed text-blue-700 dark:text-blue-300">
+                <strong>What happens next:</strong>
+                <br />• Order status will change to <strong>CONFIRMED</strong>
+                <br />• Stock will be deducted again from inventory
+                <br />• Order will appear back in the active orders list
+              </p>
+            </div>
+          </div>
+
+          <DialogFooter className="border-t my-1 border-gray-100 px-6 py-3 dark:border-gray-800">
+            <Button
+              variant="outline"
+              className="rounded-xl hover:cursor-pointer"
+              onClick={() => setRestoreCanceledConfirmOpen(false)}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              className="rounded-xl hover:cursor-pointer bg-emerald-600 hover:bg-emerald-700"
+              onClick={() => {
+                onRestoreOrder?.(order);
+                setRestoreCanceledConfirmOpen(false);
+              }}
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Restore Order
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+
       {/* ── Assign Seller Dialog ── */}
       <Dialog open={sellerDialogOpen} onOpenChange={setSellerDialogOpen}>
         <DialogContent className="sm:max-w-95 gap-0 p-0 overflow-hidden rounded-2xl border-gray-200/80 dark:border-gray-700/60">
@@ -759,12 +876,11 @@ export function OrderRowActions({
                           <div
                             className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[9px] font-bold text-white"
                             style={{
-                              background: `hsl(${
-                                [...u.name].reduce(
-                                  (a, c) => a + c.charCodeAt(0),
-                                  0,
-                                ) % 360
-                              },52%,50%)`,
+                              background: `hsl(${[...u.name].reduce(
+                                (a, c) => a + c.charCodeAt(0),
+                                0,
+                              ) % 360
+                                },52%,50%)`,
                             }}
                           >
                             {u.name?.[0]?.toUpperCase() ?? "?"}

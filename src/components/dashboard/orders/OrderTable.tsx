@@ -25,6 +25,7 @@ interface OrderTableProps {
   onViewOrder?: (order: Order) => void;
   onAssignCourier?: (order: Order) => void;
   onCancelOrder?: (order: Order) => void;
+  onRestoreOrder?: (order: Order) => void;
   setDeleteTarget?: (order: Order) => void;
   setDeleteOpen?: (open: boolean) => void;
   onPartialUpdate?: (order: Order) => void;
@@ -43,6 +44,7 @@ export function OrderTable({
   onConfirmOrder,
   onViewInvoice,
   onCancelOrder,
+  onRestoreOrder,
   onAssignCourier,
   onViewOrder,
   onPartialUpdate,
@@ -235,13 +237,13 @@ export function OrderTable({
                     <span className="text-xs text-gray-500 dark:text-gray-400">
                       {order.createdAt
                         ? new Date(order.createdAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            },
-                          )
+                          "en-US",
+                          {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          },
+                        )
                         : "—"}
                     </span>
                     {order.scheduledAt && (
@@ -264,6 +266,7 @@ export function OrderTable({
                     onMarkExchange={onExchange}
                     onMarkDamage={onMarkDamage}
                     onCancelOrder={onCancelOrder}
+                    onRestoreOrder={onRestoreOrder}
                     setDeleteTarget={setDeleteTarget}
                     onViewInvoice={onViewInvoice}
                     setDeleteOpen={setDeleteOpen}
