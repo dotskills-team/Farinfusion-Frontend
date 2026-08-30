@@ -55,6 +55,9 @@ export interface IPurchase {
 
   purchaseDate: string;
 
+  createdBy?: IUser;
+  updatedBy?: IUser
+
   createdAt?: string;
   updatedAt?: string;
 }

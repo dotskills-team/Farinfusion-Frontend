@@ -162,6 +162,7 @@ export interface IProduct {
   availableStock?: number;
   status: ProductStatus;
   isDeleted?: boolean;
+  lastStockUpdatedAt?: number;
   // Media
   images: string[];
 
@@ -173,6 +174,8 @@ export interface IProduct {
     comment: string;
     date: Date;
   }[];
+  lastStockUpdatedBy?: IUser;
+  lastAddedStock?: number;
 
   // Description
   description: string;

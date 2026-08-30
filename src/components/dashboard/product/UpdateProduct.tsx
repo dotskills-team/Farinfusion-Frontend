@@ -96,8 +96,8 @@ const UpdateProduct = () => {
   const { data: user } = useGetMeQuery(undefined);
   const role = user?.data?.role;
   const permissions = user?.data?.permissions || [];
-   const canAdjustStock =
-  role === "ADMIN" || permissions.includes("product-stock-adjustment");
+  const canAdjustStock =
+    role === "ADMIN" || permissions.includes("product-stock-adjustment");
 
   const { data: productData } = useGetSingleProductQuery(slug as string);
 
@@ -128,7 +128,7 @@ const UpdateProduct = () => {
   const currentStock = Number(productData?.data?.availableStock || 0);
   const adjustValue = Number(adjustStockValue || 0);
   const newStock = currentStock + adjustValue;
- 
+
 
   // Image state
   const [previews, setPreviews] = useState<string[]>([]);
@@ -490,6 +490,61 @@ const UpdateProduct = () => {
 
             {/* STOCK ADJUSTMENT */}
 
+            {/* {canAdjustStock && (
+              
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                <div className="space-y-3">
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                      Adjust Stock
+                    </h3>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      Current stock:{" "}
+                      <span className="font-bold text-blue-600 dark:text-blue-400">
+                        {productData?.data?.availableStock || 0}
+                      </span>{" "}
+                      units
+                    </p>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Adjust By (Add/Subtract)</Label>
+                      <Input
+                        type="number"
+                        onWheel={(e) => e.currentTarget.blur()}
+                        placeholder="e.g., 5 to add, -5 to subtract"
+                        {...register("adjustStock")}
+                        className="border-amber-200 focus:border-amber-400 dark:border-amber-800/40 dark:focus:border-amber-600"
+                      />
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                        Enter positive number to add stock, negative to remove
+                      </p>
+                      {errors.adjustStock && (
+                        <p className="text-red-500 text-xs">
+                          {errors.adjustStock.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label>New Stock Total</Label>
+                      <div className="relative">
+                        <Input
+                          type="number"
+                          onWheel={(e) => e.preventDefault()}
+                          disabled
+                          value={newStock}
+                          className="bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-semibold"
+                        />
+                        <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-1">
+                          Calculated automatically
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )} */}
+
             {canAdjustStock && (
               <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
                 <div className="space-y-3">
@@ -540,6 +595,40 @@ const UpdateProduct = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* LAST STOCK ADJUSTMENT INFO */}
+                  {typeof productData?.data?.lastAddedStock === "number" &&
+                    productData.data.lastAddedStock !== 0 && (
+                      <div className="flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 px-3 py-2">
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
+                          Last adjusted by{" "}
+                          <span className="font-medium text-foreground">
+                            {productData.data.lastStockUpdatedBy?.name ||
+                              `${productData.data.lastStockUpdatedBy?.name || ""}`.trim() ||
+                              "N/A"}{" "}
+                          </span>
+                          on{" "}
+                          {productData.data.lastStockUpdatedAt
+                            ? new Date(
+                              productData.data.lastStockUpdatedAt,
+                            ).toLocaleString("en-GB", {
+                              dateStyle: "medium",
+                              timeStyle: "short",
+                            })
+                            : "N/A"}
+                        </p>
+
+                        <span
+                          className={`text-sm font-bold ${productData.data.lastAddedStock >= 0
+                              ? "text-emerald-600"
+                              : "text-red-500"
+                            }`}
+                        >
+                          {productData.data.lastAddedStock >= 0 ? "+" : ""}
+                          {productData.data.lastAddedStock} pcs
+                        </span>
+                      </div>
+                    )}
                 </div>
               </div>
             )}

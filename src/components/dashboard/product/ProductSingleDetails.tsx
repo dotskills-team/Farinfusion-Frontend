@@ -241,9 +241,9 @@ export default function ProductSingleDetails() {
   const formatDateTime = (date?: string) =>
     date
       ? new Date(date).toLocaleString("en-GB", {
-          dateStyle: "medium",
-          timeStyle: "short",
-        })
+        dateStyle: "medium",
+        timeStyle: "short",
+      })
       : "N/A";
 
   const lastUpdatedUser = product?.lastStockUpdatedBy;
@@ -567,7 +567,7 @@ export default function ProductSingleDetails() {
                     </TableCell>
                   </TableRow>
 
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell className="font-semibold w-44">
                       Last Stock Updated By
                     </TableCell>
@@ -598,7 +598,7 @@ export default function ProductSingleDetails() {
                         </span>
                       )}
                     </TableCell>
-                  </TableRow>
+                  </TableRow> */}
 
                   <TableRow>
                     <TableCell className="font-semibold">Created By</TableCell>
@@ -627,6 +627,56 @@ export default function ProductSingleDetails() {
                       <UserInfo user={product?.lastStockUpdatedBy} />
                     </TableCell>
                   </TableRow> */}
+
+                  <TableRow>
+                    <TableCell className="font-semibold w-44">
+                      Last Stock Updated By
+                    </TableCell>
+
+                    <TableCell>
+                      {lastUpdatedUser ? (
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-9 w-9">
+                              <AvatarImage src={lastUpdatedUser.profileImage} />
+                              <AvatarFallback>{initials}</AvatarFallback>
+                            </Avatar>
+
+                            <div>
+                              <p className="font-medium">{lastUpdatedName}</p>
+
+                              <p className="text-xs text-muted-foreground">
+                                {lastUpdatedUser.role}
+                              </p>
+
+                              <p className="text-xs text-muted-foreground">
+                                {lastUpdatedUser.email}
+                              </p>
+                            </div>
+                          </div>
+
+                          {typeof product?.lastAddedStock === "number" && (
+                            <div className="text-right shrink-0">
+                              <p
+                                className={`text-sm font-bold ${product.lastAddedStock >= 0
+                                    ? "text-emerald-600"
+                                    : "text-red-500"
+                                  }`}
+                              >
+                                {product.lastAddedStock >= 0 ? "+" : ""}
+                                {product.lastAddedStock} pcs
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                {formatDateTime(product?.lastStockUpdatedAt)}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground">Never Updated</span>
+                      )}
+                    </TableCell>
+                  </TableRow>
 
                   <TableRow>
                     <TableCell className="font-semibold w-44">

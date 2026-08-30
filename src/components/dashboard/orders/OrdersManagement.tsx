@@ -140,10 +140,10 @@ export default function OrdersManagement() {
       skip: activeTab !== "scheduled",
     });
 
-   console.log("Allorders", ordersData?.data);
+  console.log("Allorders", ordersData?.data);
 
   const { data: waitingStockOrdersData, isLoading: isWaitingLoading } =
-    useGetAllWaitingStockOrdersQuery( {});
+    useGetAllWaitingStockOrdersQuery({});
 
   const { data: noResponseOrdersData, isLoading: isNoResponseLoading } =
     useGetAllNoResponseOrdersQuery({});
@@ -225,6 +225,21 @@ export default function OrdersManagement() {
       refetch();
     } catch (err: any) {
       toast.error(err?.data?.message || "Failed to cancel order");
+    }
+  };
+
+  const handleRestoreOrder = async (order: Order) => {
+    try {
+      await cancelOrder({
+        _id: order._id,
+        orderStatus: "CONFIRMED",
+        deliveryStatus: "PENDING", // or whatever your default post-restore delivery status should be
+      }).unwrap();
+
+      toast.success("Order restored successfully");
+      refetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to restore order");
     }
   };
 
@@ -311,28 +326,28 @@ export default function OrdersManagement() {
   };
 
   const handleCourierSubmit = async (courierName: CourierProvider) => {
-  if (!selectedOrder) return;
+    if (!selectedOrder) return;
 
-  try {
-    const res = await createCourier({
-      orderId: selectedOrder._id,
-      courierName,
-    }).unwrap();
+    try {
+      const res = await createCourier({
+        orderId: selectedOrder._id,
+        courierName,
+      }).unwrap();
 
-    if (res.success) {
-      toast.success("Courier assignment started");
+      if (res.success) {
+        toast.success("Courier assignment started");
 
-      setCourierModalOpen(false);
-      setSelectedOrder(null);
-    }
-  } catch (err: any) {
-    toast.error(
-      err?.data?.message ||
+        setCourierModalOpen(false);
+        setSelectedOrder(null);
+      }
+    } catch (err: any) {
+      toast.error(
+        err?.data?.message ||
         err?.error ||
         "Failed to start courier assignment",
-    );
-  }
-};
+      );
+    }
+  };
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
@@ -533,6 +548,7 @@ export default function OrdersManagement() {
             onViewInvoice={handleViewInvoice}
             onExchange={handleExchange}
             onCancelOrder={handleCancelOrder}
+            onRestoreOrder={handleRestoreOrder}
             onManualDeliveryUpdate={handleManualDeliveryUpdate}
             onMarkDamage={handleMarkDamage}
             onViewOrder={handleViewClick}
@@ -654,7 +670,7 @@ export default function OrdersManagement() {
                       className={cn(
                         "cursor-pointer",
                         page === pageNum &&
-                          "border-amber-400 text-amber-700 bg-amber-50 dark:border-amber-700 dark:text-amber-400 dark:bg-amber-900/20",
+                        "border-amber-400 text-amber-700 bg-amber-50 dark:border-amber-700 dark:text-amber-400 dark:bg-amber-900/20",
                       )}
                     >
                       {pageNum}
