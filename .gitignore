@@ -11,7 +11,9 @@
 !.yarn/versions
 
 node_modules
+.env
 .env.local
+.env.save
 
 # testing
 /coverage
