@@ -12,6 +12,44 @@ interface GetAllFoodsResponse {
   meta: IPaginationMeta;
 }
 
+// ⭐ Ranked low stock products types
+type ProductRankCategory = "HOT" | "MEDIUM" | "NORMAL";
+
+interface IRankedProduct extends IProduct {
+  rank: number | null;
+  productCategory: ProductRankCategory;
+  totalSoldInPeriod: number;
+}
+
+interface RankedLowStockData {
+  hot: IRankedProduct[];
+  medium: IRankedProduct[];
+  normal: IRankedProduct[];
+  meta: {
+    hot: IPaginationMeta;
+    medium: IPaginationMeta;
+    normal: IPaginationMeta;
+  };
+  stats: {
+    totalStockOut: number;
+    hotStockOut: number;
+    mediumStockOut: number;
+    normalStockOut: number;
+  };
+}
+
+interface GetRankedLowStockParams {
+  searchTerm?: string;
+  page?: number;
+  limit?: number;
+  hotPage?: number;
+  hotLimit?: number;
+  mediumPage?: number;
+  mediumLimit?: number;
+  normalPage?: number;
+  normalLimit?: number;
+}
+
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // ⭐ CREATE PRODUCT
@@ -81,6 +119,19 @@ export const productApi = baseApi.injectEndpoints({
       providesTags: ["PRODUCTS"],
     }),
 
+    // ⭐ GET RANKED LOW STOCK PRODUCTS (hot / medium / normal)
+    getRankedLowStockProducts: builder.query<
+      IResponse<RankedLowStockData>,
+      GetRankedLowStockParams
+    >({
+      query: (params) => ({
+        url: "/product/ranked-low-stock",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["PRODUCTS"],
+    }),
+
     toggleFeatured: builder.mutation({
       query: (id) => ({
         url: `/product/${id}/toggle-featured`,
@@ -97,6 +148,8 @@ export const productApi = baseApi.injectEndpoints({
       invalidatesTags: ["PRODUCTS"],
     }),
 
+
+
     // ⭐ TRASH UPDATE PRODUCT and Restore both work
     trashUpdateProduct: builder.mutation<IResponse<IProduct>, { _id: string }>({
       query: ({ _id }) => ({
@@ -108,6 +161,8 @@ export const productApi = baseApi.injectEndpoints({
         { type: "PRODUCT", _id },
       ],
     }),
+
+
   }),
   overrideExisting: true,
 });
@@ -122,4 +177,5 @@ export const {
   useAssignMissingBarcodesMutation,
   useGetAllTrashProductsQuery,
   useTrashUpdateProductMutation,
+  useGetRankedLowStockProductsQuery
 } = productApi;
