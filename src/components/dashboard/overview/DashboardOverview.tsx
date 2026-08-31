@@ -331,7 +331,7 @@ export default function DashboardOverview() {
   } = useGetDashboardOverviewQuery(queryParams);
   const data: IDashboardOverview | undefined = overviewRes?.data;
   const commissionSalary = me?.data?.commissionSalary || 20;
-
+     console.log("Overview Res ", data)
   const { data: users } = useGetAllUsersQuery({});
 
   const applyPreset = (preset: (typeof PRESETS)[number]) => {
