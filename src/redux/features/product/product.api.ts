@@ -177,5 +177,6 @@ export const {
   useAssignMissingBarcodesMutation,
   useGetAllTrashProductsQuery,
   useTrashUpdateProductMutation,
-  useGetRankedLowStockProductsQuery
+  useGetRankedLowStockProductsQuery,
+  useLazyGetAllProductsQuery
 } = productApi;
