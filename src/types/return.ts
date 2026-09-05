@@ -27,7 +27,16 @@ export interface ReturnParcel {
 
 export interface GetAllReturnsResponse {
   success: boolean;
-  data: ReturnParcel[];
+  data: {
+   data: ReturnParcel[];
+   stats: {
+     total: number;
+     PENDING: number;
+     PROCESSING: number;
+     COMPLETED: number;
+     totalRefunded: number;
+   };
+  };
   meta?: {
     page: number;
     limit: number;

@@ -140,8 +140,6 @@ export default function OrdersManagement() {
       skip: activeTab !== "scheduled",
     });
 
-  console.log("Allorders", ordersData?.data);
-
   const { data: waitingStockOrdersData, isLoading: isWaitingLoading } =
     useGetAllWaitingStockOrdersQuery({});
 

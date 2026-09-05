@@ -340,7 +340,8 @@ const ReturnsManagement = () => {
     useGetAllReturnsQuery(queryArgs);
 
   const { data: productsData } = useGetAllProductsQuery({ limit: 100000 });
-
+console.log("Returns data", data?.data);
+console.log("Products data", productsData);
   // Modal states
   const [selectedReturn, setSelectedReturn] = useState<any>(null);
   const [openViewModal, setOpenViewModal] = useState(false);
@@ -356,32 +357,13 @@ const ReturnsManagement = () => {
   const [returnToDelete, setReturnToDelete] = useState<any>(null);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
 
-  // Calculate statistics
-  const stats = useMemo(() => {
-    const returns = data?.data || [];
-    const totalReturns = returns.length;
-    const pendingReturns = returns.filter(
-      (r: any) => r.returnStatus === "PENDING",
-    ).length;
-    const processingReturns = returns.filter(
-      (r: any) => r.returnStatus === "PROCESSING",
-    ).length;
-    const completedReturns = returns.filter(
-      (r: any) => r.returnStatus === "COMPLETED",
-    ).length;
-    const totalRefunded = returns.reduce(
-      (sum: number, r: any) => sum + (r.refundAmount || 0),
-      0,
-    );
-
-    return {
-      totalReturns,
-      pendingReturns,
-      processingReturns,
-      completedReturns,
-      totalRefunded,
-    };
-  }, [data]);
+  const stats =  {
+      totalReturns : data?.data?.stats?.total || 0,
+      pendingReturns: data?.data?.stats?.PENDING || 0,
+      processingReturns: data?.data?.stats?.PROCESSING || 0,
+      completedReturns: data?.data?.stats?.COMPLETED || 0,
+      totalRefunded: data?.data?.stats?.totalRefunded || 0,
+  }
 
   const handleDeleteReturn = async () => {
     if (!returnToDelete?._id) return;
@@ -493,7 +475,7 @@ const ReturnsManagement = () => {
 
       {/* Table */}
       <ReturnTable
-        returns={data?.data || []}
+        returns={data?.data?.data || []}
         isLoading={isLoading}
         onView={(returnItem) => {
           setSelectedReturn(returnItem);
