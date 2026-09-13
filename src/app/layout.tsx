@@ -157,7 +157,9 @@ export default function RootLayout({
         <ReduxProvider>
           <UserProvider>
             <SonnerProvider />
-            <AppBootstrap>{children}</AppBootstrap>
+            {/* <AppBootstrap> */}
+            {children}
+            {/* </AppBootstrap> */}
           </UserProvider>
         </ReduxProvider>
       </body>

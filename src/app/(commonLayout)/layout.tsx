@@ -15,7 +15,7 @@ export default async function CommonLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ReduxProvider>
+    // <ReduxProvider>
         <TooltipProvider>
             <AnnouncementBar />
             <Navbar />
@@ -24,6 +24,6 @@ export default async function CommonLayout({
             <FarinFusionFooter />
             {/* </UserProvider> */}
         </TooltipProvider>
-    </ReduxProvider>
+    // </ReduxProvider>
   );
 }

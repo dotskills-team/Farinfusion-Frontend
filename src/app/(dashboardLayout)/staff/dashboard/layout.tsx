@@ -1,5 +1,6 @@
 "use client";
 
+import AiChatWidget from "@/components/ai-chat/AiChatWidget";
 import { DashboardContent } from "@/components/dashboard/DashboardContent";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useGlobalBarcodeScanner } from "@/hooks/useGlobalBarcodeScanner";
@@ -17,7 +18,10 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <GlobalScanner />
-      <DashboardContent>{children}</DashboardContent>
+      <DashboardContent>
+        {children}
+        {/* <AiChatWidget /> */}
+      </DashboardContent>
     </SidebarProvider>
   );
 }
