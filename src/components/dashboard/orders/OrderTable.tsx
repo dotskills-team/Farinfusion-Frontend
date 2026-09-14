@@ -66,8 +66,6 @@ export function OrderTable({
     courierMap.set(c.order?.toString(), c);
   });
 
-  console.log("courierMap", courierMap);
-
   if (error) {
     return (
       <div className="rounded-lg border border-destructive/50 bg-destructive/5 p-4 text-sm">
