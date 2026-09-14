@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -13,7 +14,6 @@ import { OrderStatusBadge } from "./OrderStatusBadge";
 import { OrderRowActions } from "./OrderRowActions";
 import type { Order } from "@/types/orders";
 import { AlertCircle, Clock, TrendingUp, Truck } from "lucide-react";
-import { useGetAllCouriersQuery } from "@/lib/hooks";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -56,16 +56,6 @@ export function OrderTable({
   onCompleteOrder,
   refetch,
 }: OrderTableProps) {
-  const { data: courierRes } = useGetAllCouriersQuery([], {
-    pollingInterval: 10000,
-  });
-  // console.log("courierRes", courierRes);
-  const courierMap = new Map<string, any>();
-
-  courierRes?.data?.forEach((c: any) => {
-    courierMap.set(c.order?.toString(), c);
-  });
-
   if (error) {
     return (
       <div className="rounded-lg border border-destructive/50 bg-destructive/5 p-4 text-sm">
@@ -138,9 +128,6 @@ export function OrderTable({
         </TableHeader>
         <TableBody>
           {orders.map((order) => {
-            const courier = courierMap.get(order._id?.toString());
-            // console.log(courier);
-
             return (
               <TableRow key={order._id} className="hover:bg-muted/50">
                 <TableCell className="font-mono text-xs font-medium">
@@ -184,43 +171,31 @@ export function OrderTable({
                 </TableCell>
                 <TableCell>
                   {order?.deliveryStatus ? (
-                    <div className="space-y-1">
-                      <OrderStatusBadge
-                        status={order?.deliveryStatus}
-                        type="delivery"
-                      />
-                      {courier?.estimatedDelivery && (
-                        <p className="text-[10px] text-gray-500 dark:text-gray-400">
-                          Est:{" "}
-                          {new Date(
-                            courier?.estimatedDelivery,
-                          ).toLocaleDateString()}
-                        </p>
-                      )}
-                    </div>
+                    <OrderStatusBadge
+                      status={order?.deliveryStatus}
+                      type="delivery"
+                    />
                   ) : (
                     <span className="text-xs text-muted-foreground">-</span>
                   )}
                 </TableCell>
                 <TableCell>
-                  {courier?._id ? (
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-2 items-center flex-col">
-                        <div className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/20 px-2.5 py-1.5 rounded-lg">
-                          <Truck
-                            size={14}
-                            className="text-blue-600 dark:text-blue-400"
-                          />
-                          <span className="text-xs font-medium text-blue-700 dark:text-blue-300">
-                            {courier.courierName}
-                          </span>
-                        </div>
-                        {courier.trackingCode && (
-                          <span className="text-[8px] text-gray-500 dark:text-gray-400 font-mono">
-                            T.Code:{courier.trackingCode}
-                          </span>
-                        )}
+                  {order?.courierName ? (
+                    <div className="flex flex-col gap-1 items-start">
+                      <div className="flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/20 px-2.5 py-1.5 rounded-lg">
+                        <Truck
+                          size={14}
+                          className="text-blue-600 dark:text-blue-400"
+                        />
+                        <span className="text-xs font-medium text-blue-700 dark:text-blue-300">
+                          {order.courierName}
+                        </span>
                       </div>
+                      {order.trackingNumber && (
+                        <span className="text-[8px] text-gray-500 dark:text-gray-400 font-mono">
+                          T.Code: {order.trackingNumber}
+                        </span>
+                      )}
                     </div>
                   ) : order.orderStatus === "CONFIRMED" ? (
                     <span className="inline-flex items-center gap-1.5 text-xs text-yellow-600 dark:text-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 px-2.5 py-1.5 rounded-lg font-medium">
@@ -258,7 +233,6 @@ export function OrderTable({
                   <OrderRowActions
                     order={order}
                     refetch={refetch}
-                    courier={courier}
                     onConfirm={onConfirmOrder}
                     onView={onViewOrder}
                     onAssignCourier={onAssignCourier}
