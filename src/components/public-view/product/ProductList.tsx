@@ -1,29 +1,53 @@
+
 "use client";
 
-import React, { useEffect, useMemo } from "react";
-import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
+import { useEffect, useRef, useState } from "react";
 import ProductSkeleton from "../home/ProductSkeleton";
 import ProductCard from "@/components/public-view/common/ProductCard";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
+import { IProduct } from "@/types";
 import { AnalyticsEvents } from "@/lib/analytics";
 
 const ProductList = () => {
-  const limit = 1000;
-  const { data, isLoading, isError } = useGetAllProductsQuery({ limit });
-
-  const productData = useMemo(() => data?.data || [], [data]);
-  const featuredData = productData.filter((item) => item.isFeatured);
+  const [productsData, setProductsData] = useState<IProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    if (!productData.length) return;
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        setIsError(false);
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/product/all-products?isFeatured=true`,
+        );
+
+        const data = await res.json();
+
+        setProductsData(data?.data || []);
+      } catch (error) {
+        console.error("Failed to fetch featured products:", error);
+        setProductsData([]);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    if (!productsData.length) return;
 
     AnalyticsEvents.viewItemList({
-      products: productData,
+      products: productsData,
       listId: "home_products",
       listName: "Home Products",
     });
-  }, [productData]);
+  }, [productsData]);
 
   if (isLoading) {
     return (
@@ -75,7 +99,7 @@ const ProductList = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {featuredData?.map((item, index) => (
+        {productsData?.map((item, index) => (
           <ProductCard key={item?._id} index={index} product={item} />
         ))}
       </div>
