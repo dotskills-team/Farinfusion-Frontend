@@ -201,7 +201,7 @@ const SingleProductDetails = () => {
               <div className="lg:w-[50%]">
                 <div className="rounded-2xl overflow-hidden bg-white shadow-sm ring-1 ring-amber-100">
                   {images.length > 0 ? (
-                    <ProductImageGallery images={images} title={title} />
+                    <ProductImageGallery images={images} title={title}  isOutOfStock={isOutOfStock} />
                   ) : (
                     <Image src={placeholderImage} alt={title} />
                   )}
@@ -281,24 +281,6 @@ const SingleProductDetails = () => {
                     </span>
                   </li>
                 </ul>
-
-                {/* rating */}
-                {/* <div className="flex items-center gap-2">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={cn(
-                        "w-4 h-4 transition-transform duration-200",
-                        i < Math.round(rating)
-                          ? "fill-amber-400 text-amber-400"
-                          : "text-gray-300",
-                      )}
-                    />
-                  ))}
-                  <span className="text-sm text-gray-500">
-                    ({reviewCount} reviews)
-                  </span>
-                </div> */}
 
                 <div className="flex flex-wrap gap-4 items-center">
                   {/* price */}
