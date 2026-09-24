@@ -1,9 +1,11 @@
+
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import { Menu, Gift, Heart, ShoppingCart, Search, X } from "lucide-react";
 import Image from "next/image";
 import { NavbarDropdown } from "@/components/modules/NavbarDropdown";
+import { CategoryNav } from "@/components/modules/CategoryNav";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -21,7 +23,7 @@ const NavbarMenu: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);
   const router = useRouter();
   const { user, logout } = useUser();
-  const { data: categoriesData } = useGetAllCategoriesQuery({ limit: 8 });
+  const { data: categoriesData } = useGetAllCategoriesQuery({ limit: 100 });
   const categories = categoriesData?.data ?? [];
 
   const [loginOpen, setLoginOpen] = useState(false);
@@ -104,8 +106,6 @@ const NavbarMenu: React.FC = () => {
     }
   };
 
-  // ... rest of state
-
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 200);
@@ -115,7 +115,6 @@ const NavbarMenu: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Measure nav height once on mount
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -173,20 +172,8 @@ const NavbarMenu: React.FC = () => {
           )}
 
           {/* CENTER */}
-          <div className="hidden xl:block">
-            <ul className="flex items-center gap-4">
-              {categories.map((category) => (
-                <li key={category.slug}>
-                  <Link
-                    href={`/shop?category=${category.slug}`}
-                    className={`text-gray-100 text-[14px] capitalize ${isSticky ? "text-[12px]" : "text-[14px]"}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {category.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="hidden xl:flex flex-1 min-w-0 mx-4">
+            <CategoryNav categories={categories} isSticky={isSticky} />
           </div>
 
           {/* RIGHT */}
@@ -247,7 +234,6 @@ const NavbarMenu: React.FC = () => {
                   <SearchDropdown
                     query={searchQuery}
                     onClose={() => setSearchOpen(false)}
-                    // containerRef={searchContainerRef}
                   />
                 )}
               </div>
@@ -316,11 +302,9 @@ const NavbarMenu: React.FC = () => {
 
         {/* MOBILE SHEET */}
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetContent
-            side="left"
-            className="w-70 p-4 flex flex-col justify-between"
-          >
-            <div>
+          <SheetContent side="left" className="w-70 p-0 flex flex-col h-full">
+            {/* Scrollable category list */}
+            <div className="flex-1 min-h-0 overflow-y-auto p-4">
               <h2 className="text-lg font-semibold mb-4">Menu</h2>
 
               <ul className="flex flex-col gap-2">
@@ -338,7 +322,8 @@ const NavbarMenu: React.FC = () => {
               </ul>
             </div>
 
-            <div className="mt-6 border-t pt-4">
+            {/* Sticky footer — always visible, never scrolls away */}
+            <div className="shrink-0 border-t p-4 bg-white">
               {user ? (
                 <div className="flex flex-col gap-2">
                   <Button
