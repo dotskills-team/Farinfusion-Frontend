@@ -137,6 +137,8 @@ export function OrderRowActions({
 
   const withoutTELESALES = userRole && ["ADMIN", "MANAGER"].includes(userRole);
 
+  const canEditAfterConfirm = isAdmin || withoutTELESALES; // ADMIN/MANAGER
+
   const [sellerDialogOpen, setSellerDialogOpen] = useState(false);
   const [manualDeliveryModalOpen, setManualDeliveryModalOpen] = useState(false);
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
@@ -303,11 +305,22 @@ export function OrderRowActions({
             )}
 
           {/* Edit */}
-          {!isWaitingStock && (
+          {/* {!isWaitingStock && (
             <DropdownMenuItem
               className="gap-2 text-sm cursor-pointer text-blue-600 focus:text-blue-600 dark:text-blue-400"
               onClick={() => setEditOpen(true)}
               disabled={hasCourier && !isAdmin}
+            >
+              <PencilLine className="h-3.5 w-3.5" />
+              Edit Order
+            </DropdownMenuItem>
+          )} */}
+
+          {!isWaitingStock && (
+            <DropdownMenuItem
+              className="gap-2 text-sm cursor-pointer text-blue-600 focus:text-blue-600 dark:text-blue-400"
+              onClick={() => setEditOpen(true)}
+              disabled={(hasCourier && !isAdmin) || (isConfirmed && !canEditAfterConfirm)}
             >
               <PencilLine className="h-3.5 w-3.5" />
               Edit Order
