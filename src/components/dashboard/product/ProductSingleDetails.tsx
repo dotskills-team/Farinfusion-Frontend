@@ -196,7 +196,6 @@ export default function ProductSingleDetails() {
   const { data: user } = useGetMeQuery(undefined);
   const [assignBarcodes, { isLoading: isGenerating }] =
     useAssignMissingBarcodesMutation();
-
   const role = user?.data?.role;
   const product: any = data?.data;
 
@@ -305,7 +304,7 @@ export default function ProductSingleDetails() {
                 <span className="font-medium text-foreground">
                   {typeof product?.category === "string"
                     ? "—"
-                    : product?.category?.title}
+                    : product?.category?.map((c:any) => c.title).join(", ") || "—"}
                 </span>
               </p>
             </div>
@@ -659,8 +658,8 @@ export default function ProductSingleDetails() {
                             <div className="text-right shrink-0">
                               <p
                                 className={`text-sm font-bold ${product.lastAddedStock >= 0
-                                    ? "text-emerald-600"
-                                    : "text-red-500"
+                                  ? "text-emerald-600"
+                                  : "text-red-500"
                                   }`}
                               >
                                 {product.lastAddedStock >= 0 ? "+" : ""}

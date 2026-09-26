@@ -51,8 +51,8 @@ const CategoryByProductCard = ({ product}: ProductCardProps) => {
 
 
   const productHref = slug ? `/product/${slug}` : "";
-  const categoryHref = category?.slug
-    ? `/shop?category=${category?.slug}`
+  const categoryHref = category[0]?.slug
+    ? `/shop?category=${category[0]?.slug}`
     : "";
 
   const isOutOfStock = !product?.availableStock || product?.availableStock <= 0;
@@ -92,10 +92,10 @@ const CategoryByProductCard = ({ product}: ProductCardProps) => {
             title: brand?.title ?? "",
           },
           category: {
-            _id: category?._id ?? "",
-            image: category?.image ?? [],
-            slug: category?.slug ?? "",
-            title: category?.title ?? "",
+            _id: category?.[0]?._id ?? "",
+            image: category?.[0]?.image ?? [],
+            slug: category?.[0]?.slug ?? "",
+            title: category?.[0]?.title ?? "",
           },
           description: product?.description ?? "",
           status: product?.status ?? "",
@@ -204,7 +204,7 @@ const CategoryByProductCard = ({ product}: ProductCardProps) => {
           {/* CATEGORY */}
           <Link href={categoryHref}>
             <p className="text-[12px] font-bold text-gray-400 hover:text-amber-400 transition-colors duration-150 leading-tight line-clamp-2">
-              {category?.title}
+              {category?.[0]?.title}
             </p>
           </Link>
 

@@ -147,7 +147,7 @@ export interface IProduct {
     title: string;
     slug: string;
     image: string[];
-  };
+  }[];
   size?: string;
   slug?: string;
 

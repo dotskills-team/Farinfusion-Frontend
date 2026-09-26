@@ -59,8 +59,8 @@ export function BestSellingProductsClient({
           {product.title}
         </h3>
 
-        <p className="text-xs text-gray-500 mt-1">
-          {product.category?.title}
+        <p className="text-xs text-gray-500 mt-1 line-clamp-1">
+          {product.category?.map((c) => c.title).join(", ")}
         </p>
 
         <div className="mt-3">

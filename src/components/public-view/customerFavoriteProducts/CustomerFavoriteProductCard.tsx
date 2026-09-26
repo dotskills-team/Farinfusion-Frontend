@@ -124,10 +124,10 @@ const handleCardClick = () => {
             title: product.brand?.title ?? "",
           },
           category: {
-            _id: product.category?._id ?? "",
-            image: product.category?.image ?? [],
-            slug: product.category?.slug ?? "",
-            title: product.category?.title ?? "",
+            _id: product.category[0]?._id ?? "",
+            image: product.category?.[0]?.image ?? [],
+            slug: product.category?.[0]?.slug ?? "",
+            title: product.category?.[0]?.title ?? "",
           },
           description: product?.description ?? "",
           status: product?.status ?? "",
@@ -226,8 +226,8 @@ const handleCardClick = () => {
             </div>
 
             {/* Category */}
-            <Link href={`/shop?category=${product.category?.slug}`}>
-              <p className="text-xs text-gray-400">{product.category?.title}</p>
+            <Link href={`/shop?category=${product.category?.[0]?.slug}`}>
+              <p className="text-xs text-gray-400">{product.category?.[0]?.title}</p>
             </Link>
 
             {/* Price ↔ Add to Cart swap */}

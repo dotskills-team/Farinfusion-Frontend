@@ -173,17 +173,17 @@ const SingleProductDetails = () => {
             </Link>
             <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-600" />
 
-            {product?.category && (
-              <>
-                <Link
-                  href={`/shop?category=${product?.category?.slug}`}
-                  className="font-semibold text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors duration-200"
-                >
-                  {product.category?.title}
-                </Link>
-                <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-600" />
-              </>
-            )}
+{product?.category && product.category.length > 0 && (
+  <>
+    <Link
+      href={`/shop?category=${product.category[0]?.slug}`}
+      className="font-semibold text-gray-600 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors duration-200"
+    >
+      {product.category[0]?.title}
+    </Link>
+    <ChevronRight className="w-4 h-4 text-gray-400 dark:text-gray-600" />
+  </>
+)}
 
             <span className="font-semibold text-gray-900 dark:text-white line-clamp-1">
               {title}
@@ -249,19 +249,19 @@ const SingleProductDetails = () => {
                       </span>
                     </li>
                   )}
-                  {category?.title && (
+                  {product?.category && product.category.length > 0  && (
                     <li className="flex gap-2">
                       <span>
                         Category:{" "}
                         <button
                           onClick={() =>
                             router.push(
-                              `/shop?category=${product?.category?.slug}`,
+                              `/shop?category=${product?.category[0]?.slug}`,
                             )
                           }
                           className="font-semibold text-amber-600 hover:text-amber-700  transition-colors duration-200 cursor-pointer"
                         >
-                          {category?.title}
+                          {product?.category[0]?.title}
                         </button>
                       </span>
                     </li>
