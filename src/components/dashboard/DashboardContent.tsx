@@ -9,10 +9,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-
 import { AppSidebar } from "./app-sidebar";
 import { ProfileDropdown } from "./ProfileDropdown";
 import DashboardSkeleton from "./DashboardSkeleton";
+import CalculatorWidget from "../calculator/CalculatorWidget";
 
 export const DashboardContent = ({
   children,
@@ -47,7 +47,11 @@ export const DashboardContent = ({
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 justify-between sticky top-0 bg-background z-10">
           <SidebarTrigger className="-ml-1" />
-          <ProfileDropdown />
+
+          <div className="flex items-center gap-2">
+            <CalculatorWidget />
+            <ProfileDropdown />
+          </div>
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
