@@ -70,10 +70,10 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             title: brand?.title ?? "",
           },
           category: {
-            _id: category?._id ?? "",
-            image: category?.image ?? [],
-            slug: category?.slug ?? "",
-            title: category?.title ?? "",
+            _id: category[0]?._id ?? "",
+            image: category[0]?.image ?? [],
+            slug: category[0]?.slug ?? "",
+            title: category[0]?.title ?? "",
           },
           description: product?.description ?? "",
           status: product?.status ?? "",
@@ -191,7 +191,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             {/* CATEGORY */}
             <Link href={categoryHref}>
               <p className="text-[12px] font-bold text-gray-400 hover:text-amber-400">
-                {category?.title}
+                {category[0]?.title}
               </p>
             </Link>
 

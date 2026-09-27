@@ -18,7 +18,7 @@ export const mapItem = (
 
   item_brand: item.brand?.title,
 
-  item_category: item.category?.title,
+  item_category: item.category?.[0]?.title,
 
   item_variant: "",
 

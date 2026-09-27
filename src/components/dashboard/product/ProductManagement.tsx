@@ -228,7 +228,7 @@ function buildProductCsvRows(list: any[], isAdmin: boolean) {
     `https://farinfusion.com/products/${p.slug}`,
     p.images[0] ?? "",
     p.brand?.title ?? p.brand ?? "",
-    p.category?.title ?? p.category ?? "",
+    p.category && p.category.length > 0 ? p.category[0]?.title : p.category ?? "",
     p.price ?? 0,
     ...(isAdmin ? [p.buyingPrice ?? 0] : []),
     p.discountPrice ?? "",
@@ -1196,7 +1196,7 @@ export default function ProductManagement() {
                       {/* Category */}
                       <td className="px-3 py-3 hidden md:table-cell">
                         <span className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
-                          {(product.category as any)?.title ?? "—"}
+                          {(product.category as any)[0]?.title ?? "—"}
                         </span>
                       </td>
                       {/* Price */}

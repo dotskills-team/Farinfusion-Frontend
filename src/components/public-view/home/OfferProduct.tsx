@@ -76,9 +76,9 @@ const OfferProduct = () => {
           >
             <CarouselContent>
               {offerProducts?.slice(0, 5)?.map((item, i) => {
-                const imageSrc = Array.isArray(item?.category?.image)
-                    ? item?.category?.image[0]
-                    : item?.category?.image || "/placeholder.png";
+                const imageSrc = Array.isArray(item?.category[0]?.image)
+                    ? item?.category[0]?.image[0]
+                    : item?.category[0]?.image || "/placeholder.png";
                 return (
                     <>
                       <CarouselItem
@@ -87,7 +87,7 @@ const OfferProduct = () => {
                       >
                         <Card
                             onClick={() =>
-                                router.push(`/shop?category=${item?.category?.slug}`)
+                                router.push(`/shop?category=${item?.category[0]?.slug}`)
                             }
                             className="flex-row items-center gap-3 rounded-lg border border-slate-200 bg-white px-2 py-2 shadow-none 
                             cursor-pointer transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg "
@@ -95,10 +95,10 @@ const OfferProduct = () => {
 
                           <Image
                               onClick={() =>
-                                  router.push(`/shop?category=${item?.category?.slug}`)
+                                  router.push(`/shop?category=${item?.category[0]?.slug}`)
                               }
                               src={imageSrc}
-                              alt={item.category?.title}
+                              alt={item.category[0]?.title}
                               width={500}
                               height={500}
                               priority
@@ -108,11 +108,11 @@ const OfferProduct = () => {
                           <div className="min-w-0">
                             <h3
                                 onClick={() =>
-                                    router.push(`/shop?category=${item?.category?.slug}`)
+                                    router.push(`/shop?category=${item?.category[0]?.slug}`)
                                 }
                                 className="truncate text-sm font-semibold text-gray-800 cursor-pointer"
                             >
-                              {item.category?.title}
+                              {item.category[0]?.title}
                             </h3>
 
                             {/* rating */}

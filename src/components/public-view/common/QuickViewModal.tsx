@@ -262,7 +262,7 @@ const QuickViewModal = ({
             <div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
               <span className="font-semibold text-gray-700">Category:</span>
               <Badge variant="secondary" className="text-xs">
-                {product.category?.title}
+                {product.category[0]?.title}
               </Badge>
             </div>
 
