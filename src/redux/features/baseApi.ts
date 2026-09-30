@@ -37,6 +37,8 @@ export const baseApi = createApi({
     "DASHBOARD_OVERVIEW",
     "DASHBOARD_STATS",
     "COUPONS",
+    "SCHEDULE",
+    "SCHEDULES"
   ],
   endpoints: () => ({}),
 });

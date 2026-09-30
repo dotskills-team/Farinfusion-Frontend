@@ -13,6 +13,7 @@ import { AppSidebar } from "./app-sidebar";
 import { ProfileDropdown } from "./ProfileDropdown";
 import DashboardSkeleton from "./DashboardSkeleton";
 import CalculatorWidget from "../calculator/CalculatorWidget";
+import ScheduleCalendar from "../schedule/ScheduleCalender";
 
 export const DashboardContent = ({
   children,
@@ -49,6 +50,7 @@ export const DashboardContent = ({
           <SidebarTrigger className="-ml-1" />
 
           <div className="flex items-center gap-2">
+            <ScheduleCalendar />
             <CalculatorWidget />
             <ProfileDropdown />
           </div>
