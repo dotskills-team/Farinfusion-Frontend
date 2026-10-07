@@ -179,6 +179,7 @@ import {
   Settings,
   Star,
 } from "lucide-react";
+import { FaFacebook } from "react-icons/fa";
 
 export interface SidebarItem {
   id: PageAccess;
@@ -212,7 +213,9 @@ const iconMap: Record<PageAccess, React.ReactNode> = {
   blogs: <ListOrdered className="h-5 w-5" />,
   leads: <Target className="h-5 w-5" />,
   pos: <Store className="h-5 w-5" />,
+  "facebook-inbox": <FaFacebook className="h-5 w-5" />,
   "courier-settings": <Settings className="h-5 w-5" />,
+
 };
 
 const pageHrefMap: Record<any, string> = {
@@ -235,6 +238,7 @@ const pageHrefMap: Record<any, string> = {
   leads: "/staff/dashboard/leads",
   "my-orders": "/staff/dashboard/my-orders",
   pos: "/staff/dashboard/pos",
+  "facebook-inbox": "/staff/dashboard/facebook-inbox",
   "courier-settings": "/staff/dashboard/admin/courier-settings",
 };
 
@@ -271,6 +275,7 @@ export const buildSidebarItems = (
       "leads",
       "my-orders",
       "pos",
+      "facebook-inbox",
       "courier-settings",
     ],
   };

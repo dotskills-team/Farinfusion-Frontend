@@ -38,7 +38,13 @@ export const baseApi = createApi({
     "DASHBOARD_STATS",
     "COUPONS",
     "SCHEDULE",
-    "SCHEDULES"
+    "SCHEDULES",
+    "FB_CONVERSATIONS",
+    "FB_MESSAGES",
+    "FB_LOGS",
+    "FB_MODERATORS",
+    "FB_SETTINGS",
+    "FB_REPORT",
   ],
   endpoints: () => ({}),
 });

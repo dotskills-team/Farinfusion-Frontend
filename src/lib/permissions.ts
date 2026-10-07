@@ -152,7 +152,8 @@ export type PageAccess =
   | "orders-management"
   | "leads"
   | "pos"
-  | "courier-settings";
+  | "courier-settings"
+  | "facebook-inbox";
 
 export type UserRole =
   | "ADMIN"
@@ -192,6 +193,7 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "my-orders",
     "pos",
     "courier-settings",
+    "facebook-inbox",
   ],
   MANAGER: [
     "dashboard",
@@ -205,6 +207,7 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "leads",
     "my-orders",
     "pos",
+    "facebook-inbox",
   ],
   TELESALES: [
     "dashboard",
@@ -217,7 +220,14 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "my-orders",
     "pos",
   ],
-  MODERATOR: ["dashboard", "product-management", "low-stock-products", "my-orders", "leads"],
+  MODERATOR: [
+    "dashboard", 
+    "product-management", 
+    "low-stock-products", 
+    "my-orders", 
+    "leads",
+    "facebook-inbox"
+  ],
   CUSTOMER: ["dashboard", "my-orders"],
 };
 
@@ -255,6 +265,7 @@ export const availablePages: { id: PageAccess; label: string; icon: string }[] =
 
     { id: "user-management", label: "User Management", icon: "🔐" },
     { id: "courier-settings", label: "Courier Settings", icon: "🧰" },
+    { id: "facebook-inbox", label: "Facebook Inbox", icon: "📨" },
   ];
 
 export const hasPageAccess = (
