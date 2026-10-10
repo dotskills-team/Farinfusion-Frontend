@@ -1,12 +1,9 @@
+
 export type TFbConvStatus = "UNASSIGNED" | "OPEN" | "CONVERTED" | "CLOSED";
 export type TChatStatus = "ONLINE" | "OFFLINE";
+export type TFbReaction = "like" | "love" | "smile" | "wow" | "sad" | "angry";
 export type TFbAssignType =
-  | "AUTO"
-  | "MANUAL"
-  | "TRANSFER"
-  | "CLAIM"
-  | "RELEASE"
-  | "SLA";
+  "AUTO" | "MANUAL" | "TRANSFER" | "CLAIM" | "RELEASE" | "SLA";
 
 export interface IFbUserRef {
   _id: string;
@@ -48,6 +45,10 @@ export interface IFbMessage {
   createdAt: string;
   sentByName?: string | null;
   attachments: IFbAttachment[];
+  // true for a message pushed over the socket before Meta's API returns it
+  local?: boolean;
+  // Our reaction on this message, if known
+  myReaction?: TFbReaction | null;
 }
 
 export interface IFbMessagesData {
@@ -115,6 +116,7 @@ export interface IFbSocketMessageEvent {
   conversationId: string;
   assignedTo: string | null;
   direction: "inbound" | "outbound";
+  message?: IFbMessage;
 }
 
 export interface IFbSocketAssignmentEvent {
