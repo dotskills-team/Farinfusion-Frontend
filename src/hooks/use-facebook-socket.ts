@@ -23,6 +23,10 @@
 //     // The backend reads the accessToken cookie from the handshake
 //     const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL as string, {
 //       withCredentials: true,
+//       // WebSocket only. HTTP long-polling needs every request to reach the same
+//       // server instance (sticky sessions), which Render doesn't guarantee. That
+//       // is what causes "Session ID unknown"
+//       transports: ["websocket"],
 //     });
 
 //     let firstConnect = true;
@@ -118,6 +122,9 @@
 // };
 
 
+
+// v2
+
 "use client";
 /* eslint-disable no-console, @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
@@ -140,12 +147,34 @@ export const useFbSocket = () => {
 
   useEffect(() => {
     // The backend reads the accessToken cookie from the handshake
+    // The socket authenticates with a short-lived token from the API, because
+    // cookies are not sent cross-site when the frontend and API are on different domains
+    const fetchSocketToken = async () => {
+      const request = dispatch(
+        facebookApi.endpoints.getFbSocketToken.initiate(undefined, {
+          forceRefetch: true,
+        }),
+      );
+      try {
+        const res = await request.unwrap();
+        return res.data.token;
+      } finally {
+        request.unsubscribe();
+      }
+    };
+
     const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL as string, {
       withCredentials: true,
       // WebSocket only. HTTP long-polling needs every request to reach the same
       // server instance (sticky sessions), which Render doesn't guarantee. That
       // is what causes "Session ID unknown"
       transports: ["websocket"],
+      // A function here runs again on every reconnect, so the token is always fresh
+      auth: (cb) => {
+        fetchSocketToken()
+          .then((token) => cb({ token }))
+          .catch(() => cb({}));
+      },
     });
 
     let firstConnect = true;
