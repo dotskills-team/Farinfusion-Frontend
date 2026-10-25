@@ -214,6 +214,7 @@ const iconMap: Record<PageAccess, React.ReactNode> = {
   leads: <Target className="h-5 w-5" />,
   pos: <Store className="h-5 w-5" />,
   "facebook-inbox": <FaFacebook className="h-5 w-5" />,
+  "wrong-assigned-products": <ShoppingCart className="h-5 w-5" />,
   "courier-settings": <Settings className="h-5 w-5" />,
 
 };
@@ -239,6 +240,7 @@ const pageHrefMap: Record<any, string> = {
   "my-orders": "/staff/dashboard/my-orders",
   pos: "/staff/dashboard/pos",
   "facebook-inbox": "/staff/dashboard/facebook-inbox",
+  "wrong-assigned-products": "/staff/dashboard/wrong-assigned-products",
   "courier-settings": "/staff/dashboard/admin/courier-settings",
 };
 
@@ -276,6 +278,7 @@ export const buildSidebarItems = (
       "my-orders",
       "pos",
       "facebook-inbox",
+      "wrong-assigned-products",
       "courier-settings",
     ],
   };

@@ -45,6 +45,7 @@ export const baseApi = createApi({
     "FB_MODERATORS",
     "FB_SETTINGS",
     "FB_REPORT",
+    "WRONG_ASSIGNED_PRODUCTS"
   ],
   endpoints: () => ({}),
 });

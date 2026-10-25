@@ -153,7 +153,8 @@ export type PageAccess =
   | "leads"
   | "pos"
   | "courier-settings"
-  | "facebook-inbox";
+  | "facebook-inbox"
+  | "wrong-assigned-products";
 
 export type UserRole =
   | "ADMIN"
@@ -194,6 +195,7 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "pos",
     "courier-settings",
     "facebook-inbox",
+    "wrong-assigned-products",
   ],
   MANAGER: [
     "dashboard",
@@ -208,6 +210,7 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "my-orders",
     "pos",
     "facebook-inbox",
+    "wrong-assigned-products"
   ],
   TELESALES: [
     "dashboard",
@@ -266,6 +269,7 @@ export const availablePages: { id: PageAccess; label: string; icon: string }[] =
     { id: "user-management", label: "User Management", icon: "🔐" },
     { id: "courier-settings", label: "Courier Settings", icon: "🧰" },
     // { id: "facebook-inbox", label: "Facebook Inbox", icon: "📨" },
+    { id: "wrong-assigned-products", label: "Wrong Assigned Products", icon: "�" },
   ];
 
 export const hasPageAccess = (

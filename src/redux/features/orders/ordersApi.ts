@@ -299,6 +299,6 @@ export const {
   useMarkDamageMutation,
   useUpdateSellerMutation,
   useCompleteOrderMutation,
-
+useLazyGetAllOrdersQuery,
   useGetAllholdOrdersQuery,
 } = ordersApi;

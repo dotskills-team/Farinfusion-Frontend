@@ -112,6 +112,7 @@ export const adminSidebar = [
       { title: "POS", url: "/staff/dashboard/pos", icon: StoreIcon },
     ],
   },
+
   // {
   //   title: "Facebook",
   //   items: [
@@ -122,6 +123,17 @@ export const adminSidebar = [
   //     },
   //   ],
   // },
+
+  {
+    title: "Wrong Assigned Products",
+    items: [
+      {
+        title: "Wrong Assigned Products",
+        url: "/staff/dashboard/wrong-assigned-products",
+        icon: ListOrdered,
+      },
+    ],
+  },
 ];
 
 export const telecallerSidebar = [
@@ -216,6 +228,18 @@ export const managerSidebar = [
       //     },
       //   ],
       // },
+
+      {
+        title: "Wrong Assigned Products",
+        items: [
+          {
+            title: "Facebook Inbox",
+            url: "/staff/dashboard/wrong-assigned-products",
+            icon: ListOrdered,
+          },
+        ],
+      },
+
       // {
       //   title: "Facebook",
       //   items: [
