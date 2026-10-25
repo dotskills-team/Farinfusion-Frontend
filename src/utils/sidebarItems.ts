@@ -23,16 +23,16 @@ export const moderatorSidebar = [
         url: "/staff/dashboard/my-customers",
         icon: Users,
       },
-      {
-        title: "Facebook",
-        items: [
-          {
-            title: "Facebook Inbox",
-            url: "/staff/dashboard/facebook-inbox",
-            icon: ListOrdered,
-          },
-        ],
-      },
+      // {
+      //   title: "Facebook",
+      //   items: [
+      //     {
+      //       title: "Facebook Inbox",
+      //       url: "/staff/dashboard/facebook-inbox",
+      //       icon: ListOrdered,
+      //     },
+      //   ],
+      // },
       { title: "POS", url: "/staff/dashboard/pos", icon: StoreIcon },
       {
         title: "My Orders",
@@ -112,16 +112,16 @@ export const adminSidebar = [
       { title: "POS", url: "/staff/dashboard/pos", icon: StoreIcon },
     ],
   },
-  {
-    title: "Facebook",
-    items: [
-      {
-        title: "Facebook Inbox",
-        url: "/staff/dashboard/facebook-inbox",
-        icon: ListOrdered,
-      },
-    ],
-  },
+  // {
+  //   title: "Facebook",
+  //   items: [
+  //     {
+  //       title: "Facebook Inbox",
+  //       url: "/staff/dashboard/facebook-inbox",
+  //       icon: ListOrdered,
+  //     },
+  //   ],
+  // },
 ];
 
 export const telecallerSidebar = [
@@ -206,26 +206,26 @@ export const managerSidebar = [
       { title: "Leads", url: "/staff/dashboard/leads", icon: ListOrdered },
       { title: "POS", url: "/staff/dashboard/pos", icon: StoreIcon },
       // { title: "My Orders", url: "/staff/dashboard/my-orders", icon: ListOrdered },
-      {
-        title: "Facebook",
-        items: [
-          {
-            title: "Facebook Inbox",
-            url: "/staff/dashboard/facebook-inbox",
-            icon: ListOrdered,
-          },
-        ],
-      },
-      {
-        title: "Facebook",
-        items: [
-          {
-            title: "Facebook Inbox",
-            url: "/staff/dashboard/facebook-inbox",
-            icon: ListOrdered,
-          },
-        ],
-      },
+      // {
+      //   title: "Facebook",
+      //   items: [
+      //     {
+      //       title: "Facebook Inbox",
+      //       url: "/staff/dashboard/facebook-inbox",
+      //       icon: ListOrdered,
+      //     },
+      //   ],
+      // },
+      // {
+      //   title: "Facebook",
+      //   items: [
+      //     {
+      //       title: "Facebook Inbox",
+      //       url: "/staff/dashboard/facebook-inbox",
+      //       icon: ListOrdered,
+      //     },
+      //   ],
+      // },
     ],
   },
 ];

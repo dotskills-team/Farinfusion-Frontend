@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -61,6 +62,7 @@ import {
   Banknote,
   BadgeCheck,
   PhoneMissed,
+  Send,
 } from "lucide-react";
 import { useGetDashboardOverviewQuery } from "@/redux/features/dashboard/dashboard.api";
 import {
@@ -331,7 +333,6 @@ export default function DashboardOverview() {
   } = useGetDashboardOverviewQuery(queryParams);
   const data: IDashboardOverview | undefined = overviewRes?.data;
   const commissionSalary = me?.data?.commissionSalary || 20;
-     console.log("Overview Res ", data)
   const { data: users } = useGetAllUsersQuery({});
 
   const applyPreset = (preset: (typeof PRESETS)[number]) => {
@@ -442,6 +443,14 @@ export default function DashboardOverview() {
         cls: "border-violet-200 bg-violet-50/60 dark:border-violet-900/30 dark:bg-violet-900/10",
         val: "text-violet-700 dark:text-violet-400",
         count: data.orderStats?.COMPLETED ?? 0,
+      },
+      {
+        key: "SENT_TO_COURIER",
+        label: "Sent to Courier",
+        icon: Send,
+        cls: "border-indigo-200 bg-indigo-50/60 dark:border-indigo-900/30 dark:bg-indigo-900/10",
+        val: "text-indigo-700 dark:text-indigo-400",
+        count: data.totalSentToCourier ?? 0,
       },
       {
         key: "COURIERASSIGNED",
@@ -794,6 +803,13 @@ export default function DashboardOverview() {
                       accent="bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400"
                     />
                     <StatCard
+                    label="Sent to Courier"
+                    value={data.totalSentToCourier ?? 0}
+                    icon={Send}
+                    accent="bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20 dark:text-indigo-400"
+                    sub={dateChipLabel ?? "This month"}
+                  />
+                    <StatCard
                       label="Courier Assigned"
                       value={data.orderStats?.COURIER_ASSIGNED || 0}
                       icon={Truck}
@@ -816,6 +832,7 @@ export default function DashboardOverview() {
                     />
                   </>
                 )}
+
                 {isAdmin && data.totalUsers !== undefined && (
                   <StatCard
                     label="Total Staffs"
@@ -1019,14 +1036,6 @@ export default function DashboardOverview() {
               dateLabel={dateChipLabel}
             />
           )}
-
-          {/* ── Staff Earnings Table — ADMIN only, payroll (commission-based), date-filtered ── */}
-          {/* {isAdmin && data.staffEarnings && (
-            <StaffEarningsTable
-              staffEarnings={(data as any).staffEarnings ?? []}
-              dateLabel={dateChipLabel}
-            />
-          )} */}
 
           {/* ── Top Products Table — ADMIN + MANAGER, date-filtered ── */}
           {(isAdmin || isManager) && (

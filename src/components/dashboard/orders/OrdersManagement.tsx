@@ -59,6 +59,7 @@ import { DamageOrderModal } from "./DamageOrderModal";
 import { useUser } from "@/context/UserContext";
 import { InvoiceDialog } from "../shared/InvoiceDialog";
 import { CourierProvider } from "@/types";
+import Link from "next/link";
 
 // const LIMIT = 10;
 type ActiveTab =
@@ -467,7 +468,8 @@ export default function OrdersManagement() {
   return (
     <div className="min-h-screen space-y-6 bg-background p-4 md:p-8">
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col-reverse md:flex-row items-start justify-between gap-4">
+
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-50 md:text-3xl">
             Orders
@@ -476,8 +478,16 @@ export default function OrdersManagement() {
             Manage and track all customer orders and shipments
           </p>
         </div>
-        <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-900/20">
-          <ShoppingBag className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-900/20">
+            <ShoppingBag className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+          </div>
+          <div className="flex items-center gap-4 justify-end">
+
+            <Link href="/staff/dashboard/leads" className="rounded-lg bg-amber-500 text-xs px-4 py-2 md:text-sm font-semibold text-white shadow-md transition hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+              Leads Page
+            </Link>
+          </div>
         </div>
       </div>
 

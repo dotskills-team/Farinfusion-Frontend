@@ -225,7 +225,7 @@ function buildProductCsvRows(list: any[], isAdmin: boolean) {
     p.title ?? "",
     stripHtml(p.description),
     p.availableStock ?? 0,
-    `https://farinfusion.com/products/${p.slug}`,
+    `https://farinfusion.com/product/${p.slug}`,
     p.images[0] ?? "",
     p.brand?.title ?? p.brand ?? "",
     p.category && p.category.length > 0 ? p.category[0]?.title : p.category ?? "",

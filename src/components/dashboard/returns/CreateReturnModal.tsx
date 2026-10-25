@@ -59,7 +59,7 @@ interface CreateReturnModalProps {
 const ELIGIBLE_ORDER_STATUSES = [
   "CONFIRMED",
   "PARTIAL",
-  "COMPLETED",
+  // "COMPLETED",
   "CANCELLED",
 ];
 

@@ -265,7 +265,7 @@ export const availablePages: { id: PageAccess; label: string; icon: string }[] =
 
     { id: "user-management", label: "User Management", icon: "🔐" },
     { id: "courier-settings", label: "Courier Settings", icon: "🧰" },
-    { id: "facebook-inbox", label: "Facebook Inbox", icon: "📨" },
+    // { id: "facebook-inbox", label: "Facebook Inbox", icon: "📨" },
   ];
 
 export const hasPageAccess = (

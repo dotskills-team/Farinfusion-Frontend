@@ -18,12 +18,13 @@ export interface IStaffEarning {
   totalOrders: number;
   totalOrderValue: number;
   shippingCost: number;
-  totalEarnings: number;
+  totalEarnings: number
 }
 
 export interface IDashboardOverview {
   totalOrders: number;
   totalRevenue: number;
+  totalSentToCourier?: number;
   totalUsers?: number;
   staffPerformance?: {
     _id: string;
