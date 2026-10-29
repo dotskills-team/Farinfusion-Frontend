@@ -233,7 +233,7 @@ export const managerSidebar = [
         title: "Wrong Assigned Products",
         items: [
           {
-            title: "Facebook Inbox",
+            title: "Wrong Assigned Products",
             url: "/staff/dashboard/wrong-assigned-products",
             icon: ListOrdered,
           },
