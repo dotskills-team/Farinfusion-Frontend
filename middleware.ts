@@ -58,6 +58,11 @@ const roleRoutes: Record<string, UserRole[]> = {
     UserRole.GENERALSTAFF,
     UserRole.TELESALES,
   ],
+
+    "/staff/dashboard/wrong-assigned-products": [
+    UserRole.ADMIN,
+    UserRole.MANAGER
+  ],
 };
 
 function getDashboardRoute(role: UserRole) {
