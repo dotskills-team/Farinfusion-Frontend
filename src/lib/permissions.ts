@@ -153,7 +153,7 @@ export type PageAccess =
   | "leads"
   | "pos"
   | "courier-settings"
-  | "facebook-inbox"
+  // | "facebook-inbox"
   | "wrong-assigned-products";
 
 export type UserRole =
@@ -194,7 +194,7 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "my-orders",
     "pos",
     "courier-settings",
-    "facebook-inbox",
+    // "facebook-inbox",
     "wrong-assigned-products",
   ],
   MANAGER: [
@@ -209,7 +209,7 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "leads",
     "my-orders",
     "pos",
-    "facebook-inbox",
+    // "facebook-inbox",
     "wrong-assigned-products"
   ],
   TELESALES: [
@@ -229,7 +229,7 @@ export const defaultRolePermissions: Record<UserRole, PageAccess[]> = {
     "low-stock-products", 
     "my-orders", 
     "leads",
-    "facebook-inbox"
+    // "facebook-inbox"
   ],
   CUSTOMER: ["dashboard", "my-orders"],
 };

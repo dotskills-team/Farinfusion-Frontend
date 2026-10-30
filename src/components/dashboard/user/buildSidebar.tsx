@@ -213,7 +213,7 @@ const iconMap: Record<PageAccess, React.ReactNode> = {
   blogs: <ListOrdered className="h-5 w-5" />,
   leads: <Target className="h-5 w-5" />,
   pos: <Store className="h-5 w-5" />,
-  "facebook-inbox": <FaFacebook className="h-5 w-5" />,
+  // "facebook-inbox": <FaFacebook className="h-5 w-5" />,
   "wrong-assigned-products": <ShoppingCart className="h-5 w-5" />,
   "courier-settings": <Settings className="h-5 w-5" />,
 
@@ -277,7 +277,7 @@ export const buildSidebarItems = (
       "leads",
       "my-orders",
       "pos",
-      "facebook-inbox",
+      // "facebook-inbox",
       "wrong-assigned-products",
       "courier-settings",
     ],
