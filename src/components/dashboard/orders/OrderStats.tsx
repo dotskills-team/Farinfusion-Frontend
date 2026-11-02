@@ -64,7 +64,9 @@ export function OrderStats({ stats }: OrderStatsProps) {
   const pendingOrders = stats.PENDING || 0;
   const confirmedOrders = stats.CONFIRMED || 0;
   const completedOrders = stats.COMPLETED || 0;
-  const waitingForStock = stats.length || 0;
+  // WAITING_FOR_STOCK is a count supplied by the page; a plain array (legacy
+  // callers) falls back to its length.
+  const waitingForStock = stats.WAITING_FOR_STOCK ?? stats.length ?? 0;
   const noResponseOrders = stats.NO_RESPONSE || 0;
 
   return (
