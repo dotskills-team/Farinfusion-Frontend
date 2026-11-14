@@ -849,6 +849,7 @@ import {
   useUpdateManualDeliveryStatusMutation,
   useGetAllNoResponseOrdersQuery,
   useGetAllWaitingStockOrdersQuery,
+  useCancelWaitingOrderMutation,
 } from "@/redux/features/orders/ordersApi";
 import { useCreateCourierMutation } from "@/lib/hooks";
 import { OrderStats } from "./OrderStats";
@@ -944,6 +945,7 @@ export default function OrdersManagement() {
 
   const [doPartialUpdate] = usePartialUpdateOrderMutation();
   const [cancelOrder] = useCancelOrderMutation();
+  const [cancelWaitingOrder] = useCancelWaitingOrderMutation();
   const [doExchange] = useExchangeOrderMutation();
   const [doDamage] = useMarkDamageMutation();
 
@@ -1090,6 +1092,17 @@ export default function OrdersManagement() {
     }
   };
 
+  const handleCancelWaitingOrder = async (order: Order) => {
+    try {
+      await cancelWaitingOrder({ _id: order._id }).unwrap();
+
+      toast.success("Order cancelled successfully");
+      refetchAll();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to cancel order");
+    }
+  };
+
   const handleRestoreOrder = async (order: Order) => {
     try {
       await cancelOrder({
@@ -1205,8 +1218,8 @@ export default function OrdersManagement() {
     } catch (err: any) {
       toast.error(
         err?.data?.message ||
-          err?.error ||
-          "Failed to start courier assignment",
+        err?.error ||
+        "Failed to start courier assignment",
       );
     }
   };
@@ -1482,6 +1495,7 @@ export default function OrdersManagement() {
             onViewInvoice={handleViewInvoice}
             setDeleteTarget={setDeleteTarget}
             setDeleteOpen={setDeleteOpen}
+            onCancelOrder={handleCancelWaitingOrder}
           />
         </TabsContent>
 
@@ -1543,7 +1557,7 @@ export default function OrdersManagement() {
                       className={cn(
                         "cursor-pointer",
                         page === pageNum &&
-                          "border-amber-400 text-amber-700 bg-amber-50 dark:border-amber-700 dark:text-amber-400 dark:bg-amber-900/20",
+                        "border-amber-400 text-amber-700 bg-amber-50 dark:border-amber-700 dark:text-amber-400 dark:bg-amber-900/20",
                       )}
                     >
                       {pageNum}

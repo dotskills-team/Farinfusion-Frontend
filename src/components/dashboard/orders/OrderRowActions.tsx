@@ -368,7 +368,7 @@ export function OrderRowActions({
             </DropdownMenuItem>
           )}
 
-          {hasAccess && isCanceled && onRestoreOrder && (
+          {/* {hasAccess && isCanceled && onRestoreOrder && (
             <>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -379,7 +379,25 @@ export function OrderRowActions({
                 Restore Order
               </DropdownMenuItem>
             </>
-          )}
+          )} */}
+
+         {hasAccess &&
+            isCanceled &&
+            onRestoreOrder &&
+            !(order.products as any)?.some?.(
+              (p: any) => (p.pendingQuantity ?? 0) > 0,
+            ) && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => setRestoreCanceledConfirmOpen(true)}
+                  className="gap-2 text-sm cursor-pointer text-emerald-600 focus:text-emerald-600 dark:text-emerald-400"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Restore Order
+                </DropdownMenuItem>
+              </>
+            )}
 
           {/* Partial Update - Only for ADMIN and when order is CONFIRMED */}
           {!isNoResponse && isAdmin && isConfirmed && onPartialUpdate && (
