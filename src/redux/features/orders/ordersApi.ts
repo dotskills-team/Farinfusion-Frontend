@@ -248,6 +248,14 @@ export const ordersApi = baseApi.injectEndpoints({
       invalidatesTags: ["ORDERS", "PRODUCTS"],
     }),
 
+    cancelWaitingOrder: builder.mutation<any, { _id: string }>({
+      query: ({ _id }) => ({
+        url: `/order/${_id}/cancel-waiting`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["ORDERS", "PRODUCTS"],
+    }),
+
     updateManualDeliveryStatus: builder.mutation({
       query: ({ id, deliveryStatus }) => ({
         url: `/order/manual-delivery-status/${id}`,
@@ -299,6 +307,7 @@ export const {
   useMarkDamageMutation,
   useUpdateSellerMutation,
   useCompleteOrderMutation,
-useLazyGetAllOrdersQuery,
+  useCancelWaitingOrderMutation,
+  useLazyGetAllOrdersQuery,
   useGetAllholdOrdersQuery,
 } = ordersApi;

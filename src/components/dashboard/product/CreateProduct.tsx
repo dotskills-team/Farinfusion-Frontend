@@ -570,9 +570,16 @@ const schema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
   brand: z.string().min(1, "Brand is required"),
   category: z.array(z.string()).min(1, "Select at least one category"),
-  buyingPrice: z.preprocess((val) => Number(val), z.number().optional()),
+  // Hidden fields (non-admin) are undefined -> must not become NaN
+  buyingPrice: z.preprocess(
+    (val) => (val === "" || val == null ? undefined : Number(val)),
+    z.number().optional(),
+  ),
   price: z.preprocess((val) => Number(val), z.number().min(0)),
-  availableStock: z.preprocess((val) => Number(val), z.number().min(0)),
+  availableStock: z.preprocess(
+    (val) => (val === "" || val == null ? 0 : Number(val)),
+    z.number().min(0),
+  ),
   discountPrice: z.preprocess(
     (val) => (val === "" ? undefined : Number(val)),
     z.number().optional(),
@@ -677,6 +684,8 @@ export default function CreateProduct() {
 
       if (role === "ADMIN") {
         payloadData.buyingPrice = data.buyingPrice;
+      }
+      if (canAdjustStock) {
         payloadData.availableStock = data.availableStock;
       }
 
